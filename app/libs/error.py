@@ -41,4 +41,5 @@ class APIException(HTTPException):
         return main_path[0]
 
 
-
+class ServerError(APIException):
+    pass

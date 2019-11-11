@@ -14,6 +14,11 @@ class Success(APIException):
     error_code = 0
 
 
+class DeleteSuccess(Success):
+    code = 202
+    error_code = 1
+
+
 class ClientTypeError(APIException):
     # 400
     code = 400
@@ -25,4 +30,21 @@ class ParameterException(APIException):
     code = 400
     msg = 'invalid parameter'
     error_code = 1000
-    pass
+
+
+class NotFound(APIException):
+    code = 404
+    msg = 'the resource are not_found ....'
+    error_code = 1001
+
+
+class AuthFailed(APIException):
+    code = 401
+    msg = 'authorization failed'
+    error_code = 1005
+
+
+class AuthFailed(APIException):
+    code = 403
+    msg = 'forbidden, not in scope'
+    error_code = 1004
