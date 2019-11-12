@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, ValidationEr
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
 from app.validators.base import BaseForm as Form
+
 __author__ = '饼干'
 
 
@@ -39,3 +40,11 @@ class UserEmailForm(ClientForm):
     def validate_account(self, value):
         if User.query.filter_by(email=value.data).first():
             raise ValidationError()
+
+
+class BookSearchForm(Form):
+    q = StringField(validators=[DataRequired(message='图书为必选')])
+
+
+class TokenForm(Form):
+    token = StringField(validators=[DataRequired()])

@@ -1,18 +1,29 @@
 """
 Created by 饼干 on 2019/11/8 11:24
 """
-from app.libs.redprint import  Redprint
+from sqlalchemy import or_
+
+from app.libs.redprint import Redprint
+from app.models.book import Book
+from app.validators.forms import BookSearchForm
+from flask import jsonify
 
 __author__ = '饼干'
 
 api = Redprint('book')
 
 
-@api.route('/get')
-def get_book():
-    return 'im ,book'
+@api.route('/search')
+def search():
+    form = BookSearchForm().validate_for_api()
+    q = '%' + form.q.data + '%'
+    books = Book.query.filter(
+        or_(Book.title.like(q), Book.publisher.like(q))).all()
+    books = [book.hide('summary') for book in books]
+    return jsonify(books)
 
 
-@api.route('/create')
-def book_create():
-    return 'im ,book_crete'
+@api.route('/<isbn>/detail')
+def detail(isbn):
+    book = Book.query.filter_by(isbn=isbn).first_or_404()
+    return jsonify(book)

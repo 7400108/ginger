@@ -48,3 +48,10 @@ class AuthFailed(APIException):
     code = 403
     msg = 'forbidden, not in scope'
     error_code = 1004
+
+
+class DuplicateGift(APIException):
+    code = 400
+    error_code = 2001
+    msg = 'the current book has already in gift'
+
